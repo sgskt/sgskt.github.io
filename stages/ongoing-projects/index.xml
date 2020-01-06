@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ongoing-projects on Simon Georges-Kot</title>
+    <link>http://example.org/stages/ongoing-projects/</link>
+    <description>Recent content in ongoing-projects on Simon Georges-Kot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://example.org/stages/ongoing-projects/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Effects of Broadband Internet Availability on Cinema Attendance</title>
+      <link>http://example.org/papers/internet-movie-attendance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/papers/internet-movie-attendance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Short-term contracts, long-run consequences ?</title>
+      <link>http://example.org/papers/short-term-contracts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/papers/short-term-contracts/</guid>
+      <description>A general public version of this research was published here (in French).
+Media coverage: Le Figaro, Libération, France Inter.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stages on Simon Georges-Kot</title>
+    <link>http://example.org/stages/</link>
+    <description>Recent content in Stages on Simon Georges-Kot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://example.org/stages/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ongoing-projects</title>
+      <link>http://example.org/stages/ongoing-projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/stages/ongoing-projects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>publications</title>
+      <link>http://example.org/stages/publications/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/stages/publications/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>working-papers</title>
+      <link>http://example.org/stages/working-papers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/stages/working-papers/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

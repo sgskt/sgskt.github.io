@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>working-papers on Simon Georges-Kot</title>
+    <link>http://example.org/stages/working-papers/</link>
+    <description>Recent content in working-papers on Simon Georges-Kot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://example.org/stages/working-papers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Annual and lifetime incidence of the value-added tax in France</title>
+      <link>http://example.org/papers/lifetime-incidence-vat/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/papers/lifetime-incidence-vat/</guid>
+      <description>This research was part of an audit of the French Court of Auditors on the value-added tax.</description>
+    </item>
+    
+    <item>
+      <title>Financial Constraints and Self-Employment in France, 1945-2014</title>
+      <link>http://example.org/papers/credit-constraints-long-run/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/papers/credit-constraints-long-run/</guid>
+      <description>A general public version of this research was published here (in French).</description>
+    </item>
+    
+    <item>
+      <title>On the retirement effect of inheritance: heterogeneity and the role of risk aversion</title>
+      <link>http://example.org/papers/inheritance-retirement/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/papers/inheritance-retirement/</guid>
+      <description>R&amp;amp;R at Labour Economics
+This paper provides new insights on the effect of inheritance receipt on retirement. We build on lifelong information on inheritances received and labor market transitions available for respondents of the French Wealth Survey. This feature allows us to compare current retirement rates among current and future inheritors. Chances of current retirement are 40% higher among current inheritors than among individuals who will inherit in the next two years, but there is substantial heterogeneity in this effect across socio-demographic groups.</description>
+    </item>
+    
+  </channel>
+</rss>
