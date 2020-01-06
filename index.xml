@@ -6,6 +6,7 @@
     <description>Recent content on Simon Georges-Kot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 05 Jan 2020 09:44:13 +0100</lastBuildDate>
     
 	<atom:link href="https://sgskt.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -17,6 +18,21 @@
       
       <guid>https://sgskt.github.io/papers/internet-movie-attendance/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>CV</title>
+      <link>https://sgskt.github.io/cv/</link>
+      <pubDate>Sun, 05 Jan 2020 09:44:13 +0100</pubDate>
+      
+      <guid>https://sgskt.github.io/cv/</guid>
+      <description>My full CV is available here
+Employment   2017-present: economist and statistician at the wages and labor income unit, INSEE
+  2014-2017: researcher in economics at the department of economic studies, INSEE
+  Education   2017-2020 (expected): PhD in economics, Paris School of Economics
+  2012-2014: MSc economics, Paris School of Economics
+  2012-2014: MSc statistics, ENSAE
+  2009-2013: Engineering degree, Ecole Polytechnique</description>
     </item>
     
     <item>
