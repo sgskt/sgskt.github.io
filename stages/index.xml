@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Stages on Simon Georges-Kot</title>
-    <link>http://example.org/stages/</link>
+    <link>https://sgskt.github.io/stages/</link>
     <description>Recent content in Stages on Simon Georges-Kot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="http://example.org/stages/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sgskt.github.io/stages/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ongoing-projects</title>
-      <link>http://example.org/stages/ongoing-projects/</link>
+      <link>https://sgskt.github.io/stages/ongoing-projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/stages/ongoing-projects/</guid>
+      <guid>https://sgskt.github.io/stages/ongoing-projects/</guid>
       <description></description>
     </item>
     
     <item>
       <title>publications</title>
-      <link>http://example.org/stages/publications/</link>
+      <link>https://sgskt.github.io/stages/publications/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/stages/publications/</guid>
+      <guid>https://sgskt.github.io/stages/publications/</guid>
       <description></description>
     </item>
     
     <item>
       <title>working-papers</title>
-      <link>http://example.org/stages/working-papers/</link>
+      <link>https://sgskt.github.io/stages/working-papers/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/stages/working-papers/</guid>
+      <guid>https://sgskt.github.io/stages/working-papers/</guid>
       <description></description>
     </item>
     

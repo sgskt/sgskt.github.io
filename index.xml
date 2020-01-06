@@ -2,66 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Simon Georges-Kot</title>
-    <link>http://example.org/</link>
+    <link>https://sgskt.github.io/</link>
     <description>Recent content on Simon Georges-Kot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sgskt.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The Effects of Broadband Internet Availability on Cinema Attendance</title>
-      <link>http://example.org/papers/internet-movie-attendance/</link>
+      <link>https://sgskt.github.io/papers/internet-movie-attendance/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/papers/internet-movie-attendance/</guid>
+      <guid>https://sgskt.github.io/papers/internet-movie-attendance/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Annual and lifetime incidence of the value-added tax in France</title>
-      <link>http://example.org/papers/lifetime-incidence-vat/</link>
+      <link>https://sgskt.github.io/papers/lifetime-incidence-vat/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/papers/lifetime-incidence-vat/</guid>
+      <guid>https://sgskt.github.io/papers/lifetime-incidence-vat/</guid>
       <description>This research was part of an audit of the French Court of Auditors on the value-added tax.</description>
     </item>
     
     <item>
       <title>Financial Constraints and Self-Employment in France, 1945-2014</title>
-      <link>http://example.org/papers/credit-constraints-long-run/</link>
+      <link>https://sgskt.github.io/papers/credit-constraints-long-run/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/papers/credit-constraints-long-run/</guid>
+      <guid>https://sgskt.github.io/papers/credit-constraints-long-run/</guid>
       <description>A general public version of this research was published here (in French).</description>
     </item>
     
     <item>
       <title>Following the Crowd: Leisure Complementarities Beyond the Household</title>
-      <link>http://example.org/papers/following-the-crowd/</link>
+      <link>https://sgskt.github.io/papers/following-the-crowd/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/papers/following-the-crowd/</guid>
+      <guid>https://sgskt.github.io/papers/following-the-crowd/</guid>
       <description>Leisure externalities across households have important implications for labor market regulations, but have proven very difficult to identify. This paper exploits the unique features of school holidays and paid leave regulations in France to show that exogenous increases in the amount of leisure time enjoyed by workers living with children induce very significant increases in the demand for leisure of workers living in other households. We also provide evidence that these cross effects are driven by complementarities in non-market-time rather than workplace norms or workplace externalities.</description>
     </item>
     
     <item>
       <title>On the retirement effect of inheritance: heterogeneity and the role of risk aversion</title>
-      <link>http://example.org/papers/inheritance-retirement/</link>
+      <link>https://sgskt.github.io/papers/inheritance-retirement/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/papers/inheritance-retirement/</guid>
+      <guid>https://sgskt.github.io/papers/inheritance-retirement/</guid>
       <description>R&amp;amp;R at Labour Economics
 This paper provides new insights on the effect of inheritance receipt on retirement. We build on lifelong information on inheritances received and labor market transitions available for respondents of the French Wealth Survey. This feature allows us to compare current retirement rates among current and future inheritors. Chances of current retirement are 40% higher among current inheritors than among individuals who will inherit in the next two years, but there is substantial heterogeneity in this effect across socio-demographic groups.</description>
     </item>
     
     <item>
       <title>Short-term contracts, long-run consequences ?</title>
-      <link>http://example.org/papers/short-term-contracts/</link>
+      <link>https://sgskt.github.io/papers/short-term-contracts/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/papers/short-term-contracts/</guid>
+      <guid>https://sgskt.github.io/papers/short-term-contracts/</guid>
       <description>A general public version of this research was published here (in French).
 Media coverage: Le Figaro, Libération, France Inter.</description>
     </item>
