@@ -6,7 +6,7 @@
     <description>Recent content on Simon Georges-Kot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jan 2020 09:44:13 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jan 2020 22:42:00 +0100</lastBuildDate>
     
 	<atom:link href="https://sgskt.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -18,6 +18,15 @@
       
       <guid>https://sgskt.github.io/papers/internet-movie-attendance/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Geomarketing</title>
+      <link>https://sgskt.github.io/posts/geomarketing/</link>
+      <pubDate>Thu, 23 Jan 2020 22:42:00 +0100</pubDate>
+      
+      <guid>https://sgskt.github.io/posts/geomarketing/</guid>
+      <description>In this post, I explore some methods to compute information on the market of businesses from open-access datasets.</description>
     </item>
     
     <item>

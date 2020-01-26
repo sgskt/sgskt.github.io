@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Simon Georges-Kot">
+    
+    
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Geomarketing"/>
+<meta name="twitter:description" content="In this post, I explore some methods to compute information on the market of businesses from open-access datasets."/>
+
+    <meta property="og:title" content="Geomarketing" />
+<meta property="og:description" content="In this post, I explore some methods to compute information on the market of businesses from open-access datasets." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sgskt.github.io/posts/geomarketing/" />
+<meta property="article:published_time" content="2020-01-23T22:42:00+01:00" />
+<meta property="article:modified_time" content="2020-01-23T22:42:00+01:00" />
+
+
+    
+      <base href="https://sgskt.github.io/posts/geomarketing/">
+    
+    <title>
+  Geomarketing · Simon Georges-Kot
+</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    
+      <link rel="canonical" href="https://sgskt.github.io/posts/geomarketing/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/main.min.e2783704b7444e735638fd4657e6e2c5e832489baa2f3bb0bc23586298fb7a98.css" integrity="sha256-4ng3BLdETnNWOP1GV&#43;bixegySJuqLzuwvCNYYpj7epg=" crossorigin="anonymous" media="screen" />
+    
+
+    <link rel="icon" type="image/png" href="https://sgskt.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://sgskt.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.62.1" />
+  </head>
+
+  <body>
+      <nav class="navbar navbar-expand-md">
+    <div class='container'>
+        <a class="navbar-brand" href="/">
+            Simon Georges-Kot
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsed" aria-controls="navbar-collapsed" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbar-collapsed">
+            
+            <ul class="navbar-nav ml-auto">
+                
+                
+                
+                
+                <li class="nav-item ">
+                    <a class="nav-link" href="https://sgskt.github.io/cv">CV</a>
+                </li>
+                
+                
+                
+                
+                <li class="nav-item ">
+                    <a class="nav-link" href="https://sgskt.github.io/papers">Research</a>
+                </li>
+                
+                
+                
+                
+                <li class="nav-item ">
+                    <a class="nav-link" href="https://sgskt.github.io/posts">Blog</a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+      <main class="container d-flex flex-column">
+          <div class="col-md-10 offset-md-1 flex-grow-1 d-flex flex-column">
+            
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Geomarketing</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <time datetime='2020-01-23T22:42:00&#43;01:00'>
+                January 23, 2020
+              </time>
+            </span>
+            ·
+            <span class="reading-time">
+                13 minutes read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        <style>
+p {
+    text-align: justify
+}
+img {
+    display: table-cell;
+    text-align: center;
+    margin:auto;
+    max-width: 100%;
+}
+</style>
+<h2 id="description-of-the-problem">Description of the problem</h2>
+<p>In many economics and buisness problems, a prerequisite of the analysis is to precisely describe the markets of the firms under study. This includes gathering demand-side information such as the characteristics of consumers in the market, and supply-side information characterizing a firm's competitors.</p>
+<p>In many cases (e.g. retail stores, restaurants, etc.), the markets of firms are local in a geographical sense: consumers and competitors are physically located close to the firm. Computing demand-side and supply-side market characteristics then involves dealing in some ways with geographical datasets. This post presents some tools and methods that can be used when one runs into problems like this one. As an illustration, I will focus on determining the market characterics of all bakeries in France.</p>
+<h2 id="data">Data</h2>
+<p>I will mainly be using two open-access datasets provided by <a href="https://insee.fr/en/accueil">Insee</a>, the French statistical office. The first one is the <a href="https://www.data.gouv.fr/en/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/">Sirene dataset</a>, which is a nearly exhaustive registry of French businesses, listing all active establishments of all firms in France at a given date. Establishments are uniquely identified by their <a href="https://en.wikipedia.org/wiki/SIRET_code">Siret number</a>, which can be used to gather additionnal information from other data sources (such as revenu, profit, etc. but this is beyond the scope of this post). The data also provides information on the establishment's industry (in the <a href="https://www.insee.fr/fr/information/2120875">NAF rev. 2 classification</a>) as well as its address, which can be used to geocode the dataset (see e.g. <a href="https://medium.com/@cq94/g%C3%A9ocodage-de-la-base-sirene-2f0e14e87a8d">this post</a> on how to do this). I will focus on bakeries, identified by industry code 1071C, and will use an already geocoded dataset to define bakeries&rsquo; markets and to identify each bakery's competitors.</p>
+<p>The <a href="https://insee.fr/fr/statistiques/4176281?sommaire=4176305#consulter">second dataset</a> I will use provides information on family structure and household income at a very detailed geographical level (down to a 200m-by-200m grid). This gridded data is built from several exhaustive administrative data sources such as tax files. It will provide the basic information on a store's consumers&rsquo; characteristics when it is intersected with bakeries&rsquo; market boundaries.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> geopandas <span style="color:#f92672">as</span> gpd
+
+dir_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>abspath(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>))
+data_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(dir_path, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">data</span><span style="color:#e6db74">&#39;</span>)
+
+<span style="color:#75715e"># Geolocalized data on bakeries build from Sirene</span>
+sir_geo <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(data_path,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">bakeries.csv</span><span style="color:#e6db74">&#39;</span>), dtype<span style="color:#f92672">=</span>{<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">siret</span><span style="color:#e6db74">&#39;</span>: object, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">depcom</span><span style="color:#e6db74">&#39;</span>: str})
+sir_geo <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>GeoDataFrame(sir_geo, geometry<span style="color:#f92672">=</span>gpd<span style="color:#f92672">.</span>points_from_xy(sir_geo<span style="color:#f92672">.</span>x, sir_geo<span style="color:#f92672">.</span>y))
+<span style="color:#75715e">#sir_geo = sir_geo.sample(1000)</span>
+
+<span style="color:#75715e"># Gridded data</span>
+rect <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(data_path,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Filosofi2015_carreaux_niveau_naturel_metropole.shp</span><span style="color:#e6db74">&#39;</span>))
+
+<span style="color:#75715e"># French administrative boundaries (excluding Corsica) - will be used to delimit markets</span>
+fradm <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(data_path,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">gadm36_FRA_1.shp</span><span style="color:#e6db74">&#39;</span>))
+fradm <span style="color:#f92672">=</span> fradm<span style="color:#f92672">.</span>loc[(fradm[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">NAME_1</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">!=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Corse</span><span style="color:#e6db74">&#39;</span>), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">geometry</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>unary_union
+
+</code></pre></div><h2 id="construction-of-the-markets">Construction of the markets</h2>
+<p>There are many ways to define the geographical market of a business, with little consensus on how to proceed as far as I know. A reasonable approach to this problem may be to consider that businesses will likely have a primary market, typically comprising all consumers who are closest to this business than to any other, and a secondary market which can overlap with one or several other businesses&rsquo; primary markets. In this definition, the primary market of all bakeries in France can be constructed by building a Voronoi diagram from all store locations. For the secondary market, two definitions might be interesting to play around with (but surely there are others): (i) consumers within a certain distance of the store (either straight-line distance or driving distance), and (ii) consumers for whom a given store is the <em>n</em>th closest (this can be done using higher-order Voronoi diagrams, see e.g. <a href="http://www.cs.utah.edu/~justin/Wares/HOV_README.html">this link</a>).</p>
+<p>I will ignore secondary markets for now and focus on primary markets. Voronoi diagrams can be easily computed and plotted in python using tools available in the <code>scipy.spatial</code> module.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.spatial <span style="color:#f92672">import</span> Voronoi, voronoi_plot_2d
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">%</span>matplotlib inline
+
+_vor <span style="color:#f92672">=</span> Voronoi(sir_geo[[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>]])
+fig <span style="color:#f92672">=</span> voronoi_plot_2d(_vor)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/geomarketing_files/geomarketing_4_0.png" alt="png"></p>
+<p>In this plot, store locations are shown as blue dots, while the vertices of the Voronoi diagram are shown as orange dots and the ridges of the Voronoi regions are shown as black lines. Each Voronoi region defines the primary market of the store contained in this region.</p>
+<p>This plot reveals a basic problem with our definition of markets: for stores at the edge of the diagram, the Voronoi region may be infinite. This corresponds to Voronoi regions with dashed ridges in the plot. Diving into the object returned by <code>scipy</code>, infinite regions can be spotted because their list of vertex indices holds a <code>-1</code> in some position, while all vertex indices are positive for &ldquo;inside&rdquo; (or closed) regions. We can draw individual Voronoi regions to inspect the problem more precisely.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> shapely.geometry <span style="color:#f92672">import</span> LineString, MultiLineString, Polygon
+<span style="color:#f92672">from</span> shapely.geometry.collection <span style="color:#f92672">import</span> GeometryCollection
+<span style="color:#f92672">from</span> shapely <span style="color:#f92672">import</span> ops
+<span style="color:#f92672">import</span> random <span style="color:#f92672">as</span> rd
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw_voronoi_region</span>(vor, point_index, ax<span style="color:#f92672">=</span>None):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Draw the voronoi cell associated to a given point</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    region <span style="color:#f92672">=</span> vor<span style="color:#f92672">.</span>regions[vor<span style="color:#f92672">.</span>point_region[point_index]]
+    point <span style="color:#f92672">=</span> vor<span style="color:#f92672">.</span>points[point_index]
+    segments <span style="color:#f92672">=</span> [s <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> zip(region, region[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">+</span>region[:<span style="color:#ae81ff">1</span>])]
+    lines <span style="color:#f92672">=</span> MultiLineString([_vor<span style="color:#f92672">.</span>vertices[[a, b]] <span style="color:#66d9ef">for</span> a, b <span style="color:#f92672">in</span> segments <span style="color:#66d9ef">if</span> a<span style="color:#f92672">!=</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> b<span style="color:#f92672">!=</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ax:
+        fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>)
+    ax<span style="color:#f92672">.</span>plot(<span style="color:#f92672">*</span>ops<span style="color:#f92672">.</span>linemerge(lines)<span style="color:#f92672">.</span>xy)
+    ax<span style="color:#f92672">.</span>plot(<span style="color:#f92672">*</span>point, marker<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">o</span><span style="color:#e6db74">&#39;</span>)
+    
+
+edge_pts_idx <span style="color:#f92672">=</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(_vor<span style="color:#f92672">.</span>npoints) <span style="color:#66d9ef">if</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">in</span> _vor<span style="color:#f92672">.</span>regions[_vor<span style="color:#f92672">.</span>point_region[i]]]
+inside_pts_idx <span style="color:#f92672">=</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(_vor<span style="color:#f92672">.</span>npoints) <span style="color:#66d9ef">if</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> _vor<span style="color:#f92672">.</span>regions[_vor<span style="color:#f92672">.</span>point_region[i]]]
+
+fig, (ax1, ax2) <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>))
+draw_voronoi_region(_vor, rd<span style="color:#f92672">.</span>choice(inside_pts_idx), ax1)
+ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Example of an inside</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> Voronoi region</span><span style="color:#e6db74">&#34;</span>)
+draw_voronoi_region(_vor, rd<span style="color:#f92672">.</span>choice(edge_pts_idx), ax2)
+ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Example of a Voronoi region</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> on the edge</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">for</span> ax <span style="color:#f92672">in</span> [ax1, ax2]:
+    ax<span style="color:#f92672">.</span>tick_params(labelbottom<span style="color:#f92672">=</span>False, labelleft<span style="color:#f92672">=</span>False, bottom<span style="color:#f92672">=</span>False, left<span style="color:#f92672">=</span>False)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/geomarketing_files/geomarketing_6_0.png" alt="png"></p>
+<p>In order to build well-defined polygons describing the geographical market of all stores in the data, we need to close the Voronoi regions on the edge, e.g. by clipping to the country's borders. This involves constructing new vertices located on the country's border for edge regions. To make things (much) faster and easier, I consider first constructing these vertices on a bounding box of the country's border. In this setting, given a set of stores $(p_0, p_1)$ on the edge of the diagram, separated by a Voronoi ridge running from vertex $v_0$ to infinity, the geometrical intuition for the construction of the new vertex (or &ldquo;far point&rdquo;) $v_1$ is as follows:
+<img src="/geomarketing_files/far_point_construction.png" alt="Far point diagram">     <br>
+This construction uses two properties of Voronoi ridges: (i) they are orthogonal to the line connecting the two points they separate, and (ii) they run through the middle of this line. These properties are straightforward as, by definition, Voronoi ridges are equidistant from both points. In the implementation below, we use the <code>ridge_dict</code> attribute of the Voronoi object returned by <code>scipy</code>, which associates each ridge described as a pair of vertices $(v_0, v_1)$ in the Voronoi diagram with the input points $(p_0, p_1)$ that this ridge separates.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> shapely.geometry <span style="color:#f92672">import</span> Point, MultiPoint, Polygon, MultiPolygon, LineString, GeometryCollection
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">far_point</span>(pts, vertex, center, bounds):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Compute far point on the bounding box for a voronoi ridge at the edge. </span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    </span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    Args:</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        pts: the two points that this ridge separates</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        vertex: the existing vertex for this ridge</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        center: the central point of the Voronoi</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">s input points</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        bounds: bounding box on which to compute the far point for the ridge</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    </span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    xmin, ymin, xmax, ymax <span style="color:#f92672">=</span> bounds
+    t <span style="color:#f92672">=</span> pts[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> pts[<span style="color:#ae81ff">0</span>]  <span style="color:#75715e"># tangent is orthogonal to the ridge</span>
+    t <span style="color:#f92672">=</span> t <span style="color:#f92672">/</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(t)
+    n <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span>t[<span style="color:#ae81ff">1</span>], t[<span style="color:#ae81ff">0</span>]]) <span style="color:#75715e"># normal gives orientation of far point </span>
+    midpoint <span style="color:#f92672">=</span> pts<span style="color:#f92672">.</span>mean(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+    n <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sign(np<span style="color:#f92672">.</span>dot(midpoint <span style="color:#f92672">-</span> center, n)) <span style="color:#f92672">*</span> n <span style="color:#75715e"># Might need to reverse direction</span>
+    <span style="color:#75715e"># If the ridge is vertical</span>
+    <span style="color:#66d9ef">if</span> n[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+        xt <span style="color:#f92672">=</span> midpoint[<span style="color:#ae81ff">0</span>]
+        yt <span style="color:#f92672">=</span> ymax <span style="color:#66d9ef">if</span> n[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> ymin
+    <span style="color:#75715e"># If the ridge is not vertical</span>
+    <span style="color:#66d9ef">else</span>:
+        slope <span style="color:#f92672">=</span> n[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">/</span> n[<span style="color:#ae81ff">0</span>]
+        intercept <span style="color:#f92672">=</span> midpoint[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> slope <span style="color:#f92672">*</span> midpoint[<span style="color:#ae81ff">0</span>]
+        xt <span style="color:#f92672">=</span> xmax <span style="color:#66d9ef">if</span> n[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> xmin
+        yt <span style="color:#f92672">=</span> intercept <span style="color:#f92672">+</span> slope <span style="color:#f92672">*</span> xt
+        <span style="color:#66d9ef">if</span> yt <span style="color:#f92672">&lt;</span> ymin:
+            yt <span style="color:#f92672">=</span> ymin
+            xt <span style="color:#f92672">=</span> (ymin <span style="color:#f92672">-</span> intercept) <span style="color:#f92672">/</span> slope
+        <span style="color:#66d9ef">elif</span> yt <span style="color:#f92672">&gt;</span> ymax:
+            yt <span style="color:#f92672">=</span> ymax
+            xt <span style="color:#f92672">=</span> (ymax <span style="color:#f92672">-</span> intercept) <span style="color:#f92672">/</span> slope
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array([xt, yt])
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">close_cell</span>(far_points, l, center, bounds):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Close voronoi cells at the edge by clipping to bounding box.</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    </span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    Args:</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        far_points: the list of far vertices associated to the Voronoi</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">            cell for this point</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        l: the list of existing segments for the Voronoi cell of this</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        point</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        center: the central point of the input points</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        bounds: coordinates of the bounding box for the Voronoi diagram</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    </span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    xmin, ymin, xmax, ymax <span style="color:#f92672">=</span> bounds
+    p1 <span style="color:#f92672">=</span> far_points[<span style="color:#ae81ff">0</span>]
+    p2 <span style="color:#f92672">=</span> far_points[<span style="color:#ae81ff">1</span>]
+    <span style="color:#66d9ef">if</span> p1[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span>xmin <span style="color:#f92672">or</span> p1[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span>xmax:
+        <span style="color:#66d9ef">if</span> p2[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span>p1[<span style="color:#ae81ff">0</span>]:
+            l<span style="color:#f92672">.</span>append(LineString([p1, p2]))
+        <span style="color:#66d9ef">elif</span> p2[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span>xmin <span style="color:#f92672">or</span> p2[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span>xmax:
+            y <span style="color:#f92672">=</span> ymin <span style="color:#66d9ef">if</span> center[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&gt;</span> p1[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">else</span> ymax
+            a1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([p1[<span style="color:#ae81ff">0</span>], y])
+            a2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([p2[<span style="color:#ae81ff">0</span>], y])
+            l<span style="color:#f92672">.</span>extend([LineString([p1, a1]), LineString([a1, a2]), LineString([a2, p2])])
+        <span style="color:#66d9ef">else</span>:
+            p <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([p1[<span style="color:#ae81ff">0</span>], p2[<span style="color:#ae81ff">1</span>]])
+            l<span style="color:#f92672">.</span>extend([LineString([p1, p]), LineString([p2, p])])
+    <span style="color:#66d9ef">else</span>: <span style="color:#75715e"># We known that p1[1]==ymin or ymax:</span>
+        <span style="color:#66d9ef">if</span> p2[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span>p1[<span style="color:#ae81ff">1</span>]:
+            l<span style="color:#f92672">.</span>append(LineString([p1, p2]))
+        <span style="color:#66d9ef">elif</span> p2[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span>ymin <span style="color:#f92672">or</span> p2[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span>ymax:
+            x <span style="color:#f92672">=</span> xmin <span style="color:#66d9ef">if</span> center[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&gt;</span> p1[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">else</span> xmax
+            a1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([x, p1[<span style="color:#ae81ff">1</span>]])
+            a2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([x, p2[<span style="color:#ae81ff">1</span>]])
+            l<span style="color:#f92672">.</span>extend([LineString([p1, a1]), LineString([a1, a2]), LineString([a2, p2])])
+        <span style="color:#66d9ef">else</span>:
+            p <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([p2[<span style="color:#ae81ff">0</span>], p1[<span style="color:#ae81ff">1</span>]])
+            l<span style="color:#f92672">.</span>extend([LineString([p1, p]), LineString([p2, p])])
+</code></pre></div><p>A second problem that we can run into is that some stores share the exact same coordinates. This can happen when geocoding fails, in which case stores are considered to be located in the geographical center of their city. But it can also happen for &ldquo;good&rdquo; reasons, e.g. in the case of a shopping mall where several stores may share the same address. In these cases, <code>scipy</code> will build the Voronoi diagram removing these &ldquo;duplicated&rdquo; points, and will then map these duplicated points to the same Voronoi region. It is up to debate whether this is a desirable feature if we want to construct the primary markets of stores - the alternative would be to have empty primary markets for stores located at the same address. I choose to assign a non-empty primary market to each store. The final code to build Voronoi polygons for each input store is provided below.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> defaultdict
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_dups</span>(l):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Find duplicated elements in a list. Return dictionary indexed by list value.</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    d <span style="color:#f92672">=</span> defaultdict(list)
+    seen <span style="color:#f92672">=</span> dict()
+    <span style="color:#66d9ef">for</span> i, v <span style="color:#f92672">in</span> enumerate(l):
+        <span style="color:#66d9ef">if</span> v <span style="color:#f92672">in</span> seen:
+            <span style="color:#66d9ef">if</span> v <span style="color:#f92672">in</span> d:
+                d[v]<span style="color:#f92672">.</span>append(i)
+            <span style="color:#66d9ef">else</span>:
+                d[v]<span style="color:#f92672">.</span>extend([i, seen[v]])
+        <span style="color:#66d9ef">else</span>:
+            seen[v] <span style="color:#f92672">=</span> i
+    <span style="color:#66d9ef">return</span> d
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_missing</span>(polys, dups):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Add polygons corresponding to duplicated points.</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    <span style="color:#66d9ef">for</span> v <span style="color:#f92672">in</span> dups<span style="color:#f92672">.</span>values():
+        <span style="color:#66d9ef">for</span> pt <span style="color:#f92672">in</span> v:
+            <span style="color:#66d9ef">if</span> pt <span style="color:#f92672">in</span> polys:
+                pl <span style="color:#f92672">=</span> polys[pt]
+        <span style="color:#66d9ef">for</span> pt <span style="color:#f92672">in</span> v:
+            polys[pt] <span style="color:#f92672">=</span> pl
+            
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">voronoi_polygons</span>(vor, bounds):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Create polygons from Voronoi object by clipping to bounds.</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    lines <span style="color:#f92672">=</span> defaultdict(list)
+    far_points <span style="color:#f92672">=</span> defaultdict(list)
+    center <span style="color:#f92672">=</span> vor<span style="color:#f92672">.</span>points<span style="color:#f92672">.</span>mean(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+    box <span style="color:#f92672">=</span> Polygon([(bounds[<span style="color:#ae81ff">0</span>], bounds[<span style="color:#ae81ff">1</span>]), (bounds[<span style="color:#ae81ff">0</span>], bounds[<span style="color:#ae81ff">3</span>]),
+                   (bounds[<span style="color:#ae81ff">2</span>], bounds[<span style="color:#ae81ff">3</span>]), (bounds[<span style="color:#ae81ff">2</span>], bounds[<span style="color:#ae81ff">1</span>])])
+    xmin, ymin <span style="color:#f92672">=</span> vor<span style="color:#f92672">.</span>vertices<span style="color:#f92672">.</span>min(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+    xmax, ymax <span style="color:#f92672">=</span> vor<span style="color:#f92672">.</span>vertices<span style="color:#f92672">.</span>max(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+    <span style="color:#75715e"># Bounding box maximale : permet de gérer les cas où certains noeuds du Voronoi sont en dehors</span>
+    vor_bounds <span style="color:#f92672">=</span> min(xmin<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, bounds[<span style="color:#ae81ff">0</span>]), min(ymin<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, bounds[<span style="color:#ae81ff">1</span>]), max(xmax<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, bounds[<span style="color:#ae81ff">2</span>]), max(ymax<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, bounds[<span style="color:#ae81ff">3</span>])
+    
+    <span style="color:#75715e"># Build collection of lines for each point</span>
+    <span style="color:#66d9ef">for</span> pts, vts <span style="color:#f92672">in</span> vor<span style="color:#f92672">.</span>ridge_dict<span style="color:#f92672">.</span>items():
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> vts:
+            seg <span style="color:#f92672">=</span> LineString([vor<span style="color:#f92672">.</span>vertices[x] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> vts])
+        <span style="color:#66d9ef">else</span>:
+            p <span style="color:#f92672">=</span> far_point(vor<span style="color:#f92672">.</span>points[list(pts)], vor<span style="color:#f92672">.</span>vertices[vts[<span style="color:#ae81ff">1</span>]], center, vor_bounds)
+            far_points[pts[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">.</span>append(p)
+            far_points[pts[<span style="color:#ae81ff">1</span>]]<span style="color:#f92672">.</span>append(p)
+            seg <span style="color:#f92672">=</span> LineString([p, vor<span style="color:#f92672">.</span>vertices[vts[<span style="color:#ae81ff">1</span>]]])
+        lines[pts[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">.</span>append(seg)
+        lines[pts[<span style="color:#ae81ff">1</span>]]<span style="color:#f92672">.</span>append(seg)
+        
+    <span style="color:#75715e"># Close voronoi cells on the edge</span>
+    <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> far_points<span style="color:#f92672">.</span>keys():
+        close_cell(far_points[k], lines[k], center, vor_bounds)
+    
+    polys <span style="color:#f92672">=</span> {i: MultiLineString(lines[i])<span style="color:#f92672">.</span>convex_hull<span style="color:#f92672">.</span>intersection(box)
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> lines<span style="color:#f92672">.</span>keys()}
+    
+    <span style="color:#75715e"># Deal with duplicates</span>
+    dups <span style="color:#f92672">=</span> find_dups(vor<span style="color:#f92672">.</span>point_region)
+    add_missing(polys, dups)
+    <span style="color:#66d9ef">return</span> polys
+</code></pre></div><p>We can just add the geometry of each Voronoi region to the corresponding store in our original <code>GeoDataFrame</code>. <code>geopandas</code> provides convenient tools to assign multiple geometries to the same row of data (in our case, the store location and the coordinates of its Voronoi region), and to switch between them. In the figure below, the darker areas corresponding to regions which are primary markets for more than one store (when multiple stores are located at the same coordinates).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> descartes <span style="color:#f92672">import</span> PolygonPatch
+
+vor <span style="color:#f92672">=</span> voronoi_polygons(_vor, fradm<span style="color:#f92672">.</span>bounds)
+vor_sorted <span style="color:#f92672">=</span> [x[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> sorted(vor<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> key_value: key_value[<span style="color:#ae81ff">0</span>])]
+sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">voronoi</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> vor_sorted
+
+fig, (ax1, ax2) <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">20</span>))
+
+<span style="color:#75715e"># Whole of France</span>
+sir_geo<span style="color:#f92672">.</span>set_geometry(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">voronoi</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax1, alpha<span style="color:#f92672">=</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2</span>, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>)
+ax1<span style="color:#f92672">.</span>add_patch(PolygonPatch(fradm, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">None</span><span style="color:#e6db74">&#34;</span>))
+ax1<span style="color:#f92672">.</span>axis(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">off</span><span style="color:#e6db74">&#39;</span>)
+ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Whole of France</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#75715e"># Zoom-in on the paris region</span>
+sir_geo_paris <span style="color:#f92672">=</span> sir_geo<span style="color:#f92672">.</span>loc[sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">depcom</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>str[:<span style="color:#ae81ff">2</span>]<span style="color:#f92672">==</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">75</span><span style="color:#e6db74">&#39;</span>]
+sir_geo_paris<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax2, marker<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">o</span><span style="color:#e6db74">&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>, markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+sir_geo_paris<span style="color:#f92672">.</span>set_geometry(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">voronoi</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax2, alpha<span style="color:#f92672">=</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2</span>, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>)
+ax2<span style="color:#f92672">.</span>axis(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">off</span><span style="color:#e6db74">&#39;</span>)
+ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Paris region</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">for</span> ax <span style="color:#f92672">in</span> [ax1, ax2]:
+    ax<span style="color:#f92672">.</span>tick_params(labelbottom<span style="color:#f92672">=</span>False, labelleft<span style="color:#f92672">=</span>False, bottom<span style="color:#f92672">=</span>False, left<span style="color:#f92672">=</span>False)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/geomarketing_files/geomarketing_12_0.png" alt="png"></p>
+<h2 id="computation-of-demand-side-variables">Computation of demand-side variables</h2>
+<p>Once we have constructed proper polygons for the primary markets, the computation of demand-side information for all stores is straightforward: we simply need to intersect the primary (or higher-order) markets with the gridded data containing demand-related variables, and compute weighted averages. The only practical difficulty is to handle the volume of data, as we have about 30k markets, which we need to intersect with a grid containing roughly 140k polygons. A brute-force solution would involve computing in the order of 10e8 intersections. Thankfully, computation time can be drastically reduced by using some form of spatial indexing for one of the two datasets (indexing the bigger dataset will typically result in the best performance — i.e. the gridded data in our case). Here I do this using <a href="https://en.wikipedia.org/wiki/R-tree">R-trees</a>, which are provided out-of-the-box by the <code>shapely</code> package.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> shapely.strtree <span style="color:#f92672">import</span> STRtree
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rectangle</span>(Polygon):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Polygon subclass that can hold arbitrary data.</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    <span style="color:#66d9ef">def</span> __init__(self, shell<span style="color:#f92672">=</span>None, holes<span style="color:#f92672">=</span>None, data<span style="color:#f92672">=</span>None):
+        super()<span style="color:#f92672">.</span>__init__(shell, holes)
+        self<span style="color:#f92672">.</span>data <span style="color:#f92672">=</span> data
+        
+<span style="color:#75715e"># R-tree construction</span>
+rect_tree <span style="color:#f92672">=</span> STRtree([Rectangle(r<span style="color:#f92672">.</span>geometry, data<span style="color:#f92672">=</span>r) <span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> rect<span style="color:#f92672">.</span>itertuples()])
+</code></pre></div><p>After building the R-tree, it is pretty fast to compute the intersection between the Voronoi regions and the gridded data. Let's plot the intersection for a random store to see what it looks like.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_intersection</span>(store_row, grid_rtree):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Plot the intersection between the gridded data and a store</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">s Voronoi region.</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    inter <span style="color:#f92672">=</span> list()
+    reg <span style="color:#f92672">=</span> store_row<span style="color:#f92672">.</span>voronoi<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> grid_rtree<span style="color:#f92672">.</span>query(reg):
+        <span style="color:#66d9ef">if</span> c<span style="color:#f92672">.</span>intersects(reg):
+            inter<span style="color:#f92672">.</span>append(c)
+    mtl <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>GeoSeries(MultiPolygon(inter))
+    fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+    mtl<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax, color<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">red</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5</span>, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>)
+    store_row<span style="color:#f92672">.</span>set_geometry(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">voronoi</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax, alpha<span style="color:#f92672">=</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5</span>, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>)
+    store_row<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax, marker<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">o</span><span style="color:#e6db74">&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">purple</span><span style="color:#e6db74">&#39;</span>, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>)
+    ax<span style="color:#f92672">.</span>tick_params(labelbottom<span style="color:#f92672">=</span>False, labelleft<span style="color:#f92672">=</span>False, bottom<span style="color:#f92672">=</span>False, left<span style="color:#f92672">=</span>False)
+    plt<span style="color:#f92672">.</span>show()
+    
+plot_intersection(sir_geo<span style="color:#f92672">.</span>sample(<span style="color:#ae81ff">1</span>), rect_tree)
+</code></pre></div><p><img src="/geomarketing_files/geomarketing_16_0.png" alt="png"></p>
+<p>Now that we checked that everything looks good, we can compute demand-related information for a store based on the intersection with the gridded data. I simply compute the sum of the characteristics in each cell of the grid for those cells that intersect with a store's Voronoi region, weighting by the share of the cell's area located inside the Voronoi region. Here I compute the size of the market (number of individuals and households), and the total income of individuals in the market (the gridded data's <a href="https://insee.fr/fr/statistiques/fichier/4176281/documentation_DonneesCarroyees.pdf">documentation</a> explains the information available in more details).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> tqdm.notebook <span style="color:#f92672">import</span> tqdm
+tqdm<span style="color:#f92672">.</span>pandas()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">compute_demand_row</span>(store_row, grid_rtree, cols):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Compute demand-related attributes for a store based on the </span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    intersection between the Voronoi region and the gridded data.</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    </span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    res <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(len(cols))
+    reg <span style="color:#f92672">=</span> store_row<span style="color:#f92672">.</span>voronoi
+    cdt <span style="color:#f92672">=</span> grid_rtree<span style="color:#f92672">.</span>query(reg)
+    <span style="color:#66d9ef">if</span> len(cdt) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> cdt:
+            prop <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>intersection(reg)<span style="color:#f92672">.</span>area <span style="color:#f92672">/</span> s<span style="color:#f92672">.</span>area
+            res <span style="color:#f92672">+</span><span style="color:#f92672">=</span> prop <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>array([getattr(s<span style="color:#f92672">.</span>data, v) <span style="color:#66d9ef">for</span> v <span style="color:#f92672">in</span> cols])
+    <span style="color:#66d9ef">return</span> pd<span style="color:#f92672">.</span>Series({k:v <span style="color:#66d9ef">for</span> k,v <span style="color:#f92672">in</span> zip(cols, res)})
+
+cols <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Ind</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Ind_snv</span><span style="color:#e6db74">&#39;</span>]
+sir_geo[cols] <span style="color:#f92672">=</span> sir_geo<span style="color:#f92672">.</span>progress_apply(<span style="color:#66d9ef">lambda</span> x: compute_demand_row(x, rect_tree, cols), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">nv</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Ind_snv</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">/</span> sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Ind</span><span style="color:#e6db74">&#39;</span>]
+</code></pre></div><pre><code>HBox(children=(FloatProgress(value=0.0, max=36478.0), HTML(value='')))
+</code></pre>
+<p>Let's see what this looks like for the Paris region! Below I plot the size of each bakery's market in Paris and the average income (by consumption unit) of households in the market.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> mpl_toolkits.axes_grid1 <span style="color:#f92672">import</span> make_axes_locatable
+
+sir_geo_paris <span style="color:#f92672">=</span> sir_geo[sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">depcom</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>str[:<span style="color:#ae81ff">2</span>]<span style="color:#f92672">==</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">75</span><span style="color:#e6db74">&#39;</span>]
+
+fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">20</span>))
+cols <span style="color:#f92672">=</span> {<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Ind</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Size of the market (individuals)</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">nv</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Average income by consumption unit (€)</span><span style="color:#e6db74">&#39;</span>}
+<span style="color:#66d9ef">for</span> a, (v, t) <span style="color:#f92672">in</span> zip(axes, cols<span style="color:#f92672">.</span>items()):
+    div <span style="color:#f92672">=</span> make_axes_locatable(a)
+    cax <span style="color:#f92672">=</span> div<span style="color:#f92672">.</span>append_axes(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">right</span><span style="color:#e6db74">&#34;</span>, size<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">5</span><span style="color:#e6db74">%</span><span style="color:#e6db74">&#34;</span>, pad<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>)
+    sir_geo_paris<span style="color:#f92672">.</span>set_geometry(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">voronoi</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>plot(v, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5</span>, cmap<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">OrRd</span><span style="color:#e6db74">&#39;</span>, legend<span style="color:#f92672">=</span>True,
+                                           ax<span style="color:#f92672">=</span>a, cax<span style="color:#f92672">=</span>cax)
+    a<span style="color:#f92672">.</span>tick_params(labelbottom<span style="color:#f92672">=</span>False, labelleft<span style="color:#f92672">=</span>False, bottom<span style="color:#f92672">=</span>False, left<span style="color:#f92672">=</span>False)
+    a<span style="color:#f92672">.</span>set_title(t)
+    a<span style="color:#f92672">.</span>axis(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">off</span><span style="color:#e6db74">&#39;</span>)
+
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/geomarketing_files/geomarketing_20_0.png" alt="png"></p>
+<h2 id="construction-of-supply-side-variables">Construction of supply-side variables</h2>
+<p>Many indicators for the competitive environment of stores can be computed in a much more straightforward manner than demand-side variables. For example, an interesting indicator might be the distance to the nearest competitor; another one could be the number of competitors within a given distance. These indicators can be easily and quickly computed if we use a proper spatial indexing structure. R-trees can also work here, but I wanted to try a different kind of data structure provided by <code>scipy</code> (with a fast implementation in C), called <a href="https://en.wikipedia.org/wiki/K-d_tree">k-d trees</a>. K-d trees and R-trees differ in the way they organize the space to enable fast queries. k-d trees recursively build separating hyperplanes, whereas R-trees build bounding rectangles that can overlap. A good comparison of both structures is available <a href="https://stackoverflow.com/questions/4326332/what-is-the-difference-between-a-kd-tree-and-a-r-tree">here</a>.</p>
+<p>Below I compute the distance to the closest store and the number of stores within 1km and 5km of each store in the dataset. Computations are incredibly fast when I use the C implementation of k-d trees <code>cKDTree</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.spatial <span style="color:#f92672">import</span> cKDTree
+
+tree <span style="color:#f92672">=</span> cKDTree(sir_geo[[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>]])
+dist, idx <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>query(sir_geo[[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>]], <span style="color:#ae81ff">2</span>) 
+sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dist_closest</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> dist[:,<span style="color:#ae81ff">1</span>]
+sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">nb_1km</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> [len(x)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> tree<span style="color:#f92672">.</span>query_ball_point(sir_geo[[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>]], <span style="color:#ae81ff">1000</span>)]
+sir_geo[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">nb_5km</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> [len(x)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> tree<span style="color:#f92672">.</span>query_ball_point(sir_geo[[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>]], <span style="color:#ae81ff">5000</span>)]
+</code></pre></div><p>This is what the final dataset looks like: we added geographical information on market boundaries (<code>voronoi</code> column), demand-side information on the number of potential consumers and their income (<code>Ind</code> and <code>Ind_snv</code>), as well as some of the characteristics of the competition (<code>dist_closest</code>, <code>nb_1km</code> and <code>nb_5km</code>).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sir_geo<span style="color:#f92672">.</span>head()
+</code></pre></div><div class="table-responsive">
+<table class="table">
+  <thead class="thead-light">
+    <tr style="text-align: right;">
+      <th></th>
+      <th>siret</th>
+      <th>x</th>
+      <th>y</th>
+      <th>depcom</th>
+      <th>geometry</th>
+      <th>voronoi</th>
+      <th>Ind</th>
+      <th>Ind_snv</th>
+      <th>nv</th>
+      <th>dist_closest</th>
+      <th>nb_1km</th>
+      <th>nb_5km</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>37963570900023</td>
+      <td>1042171.90</td>
+      <td>6300988.70</td>
+      <td>06088</td>
+      <td>POINT (1042171.900 6300988.700)</td>
+      <td>POLYGON ((1040320.417214978 6300928.997222394,...</td>
+      <td>2683.938485</td>
+      <td>6.095214e+07</td>
+      <td>22709.960239</td>
+      <td>29.748714</td>
+      <td>17</td>
+      <td>211</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>43128025400027</td>
+      <td>649378.40</td>
+      <td>6863880.10</td>
+      <td>75108</td>
+      <td>POINT (649378.400 6863880.100)</td>
+      <td>POLYGON ((649419.5349578944 6863739.24638323, ...</td>
+      <td>578.513497</td>
+      <td>2.395434e+07</td>
+      <td>41406.715286</td>
+      <td>0.000000</td>
+      <td>26</td>
+      <td>1103</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>39346965500046</td>
+      <td>931818.00</td>
+      <td>6895594.34</td>
+      <td>57463</td>
+      <td>POINT (931818.000 6895594.340)</td>
+      <td>POLYGON ((931864.3867347942 6895497.393439243,...</td>
+      <td>12.675323</td>
+      <td>3.247738e+05</td>
+      <td>25622.525951</td>
+      <td>12.096429</td>
+      <td>30</td>
+      <td>107</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44001206000057</td>
+      <td>937050.00</td>
+      <td>6637350.00</td>
+      <td>39331</td>
+      <td>POINT (937050.000 6637350.000)</td>
+      <td>POLYGON ((935622.3466448887 6633385.327943237,...</td>
+      <td>297.689314</td>
+      <td>7.115522e+06</td>
+      <td>23902.510473</td>
+      <td>925.399391</td>
+      <td>1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>40802811600015</td>
+      <td>623414.63</td>
+      <td>6390709.48</td>
+      <td>46102</td>
+      <td>POINT (623414.630 6390709.480)</td>
+      <td>POLYGON ((623382.2018712459 6390559.277231222,...</td>
+      <td>883.117236</td>
+      <td>1.958775e+07</td>
+      <td>22180.234174</td>
+      <td>46.360722</td>
+      <td>12</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+      </div>
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+          </div>
+      </main>
+
+      <footer class="footer">
+  <div class="container">
+    
+     
+        © 2020 Simon Georges-Kot
+    
+    
+       · 
+       Built with <a href="https://gohugo.io/">Hugo</a>
+    
+    
+  </div>
+</footer>
+
+
+    
+
+  </body>
+
+</html>
