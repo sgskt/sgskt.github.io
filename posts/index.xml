@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Simon Georges-Kot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jan 2020 22:42:00 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2020 20:28:00 +0100</lastBuildDate>
     
 	<atom:link href="https://sgskt.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Meaningful chloropleth maps</title>
+      <link>https://sgskt.github.io/posts/chloropleth/</link>
+      <pubDate>Tue, 28 Apr 2020 20:28:00 +0100</pubDate>
+      
+      <guid>https://sgskt.github.io/posts/chloropleth/</guid>
+      <description>I look at different ways to group geographical units in order to build chloropleth maps, and at different methods to choose the number of classes in the most meaningful way.</description>
+    </item>
     
     <item>
       <title>Geomarketing</title>

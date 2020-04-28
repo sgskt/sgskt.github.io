@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Simon Georges-Kot">
+    
+    
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Meaningful chloropleth maps"/>
+<meta name="twitter:description" content="I look at different ways to group geographical units in order to build chloropleth maps, and at different methods to choose the number of classes in the most meaningful way."/>
+
+    <meta property="og:title" content="Meaningful chloropleth maps" />
+<meta property="og:description" content="I look at different ways to group geographical units in order to build chloropleth maps, and at different methods to choose the number of classes in the most meaningful way." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sgskt.github.io/posts/chloropleth/" />
+<meta property="article:published_time" content="2020-04-28T20:28:00+01:00" />
+<meta property="article:modified_time" content="2020-04-28T20:28:00+01:00" />
+
+
+    
+      <base href="https://sgskt.github.io/posts/chloropleth/">
+    
+    <title>
+  Meaningful chloropleth maps · Simon Georges-Kot
+</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    
+      <link rel="canonical" href="https://sgskt.github.io/posts/chloropleth/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/main.min.e2783704b7444e735638fd4657e6e2c5e832489baa2f3bb0bc23586298fb7a98.css" integrity="sha256-4ng3BLdETnNWOP1GV&#43;bixegySJuqLzuwvCNYYpj7epg=" crossorigin="anonymous" media="screen" />
+    
+
+    <link rel="icon" type="image/png" href="https://sgskt.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://sgskt.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.62.1" />
+  </head>
+
+  <body>
+      <nav class="navbar navbar-expand-md">
+    <div class='container'>
+        <a class="navbar-brand" href="/">
+            Simon Georges-Kot
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsed" aria-controls="navbar-collapsed" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbar-collapsed">
+            
+            <ul class="navbar-nav ml-auto">
+                
+                
+                
+                
+                <li class="nav-item ">
+                    <a class="nav-link" href="https://sgskt.github.io/cv">CV</a>
+                </li>
+                
+                
+                
+                
+                <li class="nav-item ">
+                    <a class="nav-link" href="https://sgskt.github.io/papers">Research</a>
+                </li>
+                
+                
+                
+                
+                <li class="nav-item ">
+                    <a class="nav-link" href="https://sgskt.github.io/posts">Blog</a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+      <main class="container d-flex flex-column">
+          <div class="col-md-10 offset-md-1 flex-grow-1 d-flex flex-column">
+            
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Meaningful chloropleth maps</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <time datetime='2020-04-28T20:28:00&#43;01:00'>
+                April 28, 2020
+              </time>
+            </span>
+            ·
+            <span class="reading-time">
+                9 minutes read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        <style>
+p {
+    text-align: justify
+}
+img {
+    display: table-cell;
+    text-align: center;
+    margin:auto;
+    max-width: 100%;
+}
+</style>
+<h2 id="description-of-the-problem">Description of the problem</h2>
+<p>Chloropleth maps can be an efficient way to represent geographical variation in an outcome of interest. However, they can also be quite misleading if the construction of color classes is not well thought out. Worse, by carefully handpicking color classes, one can make a map carry very different messages. Hence strong guidelines are needed in order to build meaningful maps, and several questions arise in practice: how many color classes should be chosen? How should these classes be constructed? How should we proceed when we want to compare chloropleth maps for several outcomes (or for the same outcome over time)?
+Choosing color classes is basically a clustering problem, so the methods and tools available have their origin in cluster analysis. There is a nice python library called <code>mapclassify</code> that provides a number of very useful methods, but I will present other possible approaches as well.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>Fisher-Jenks&rsquo; exact optimization method provides a way to find a classification acheiving maximum between-class variance for a given number of classes. It is certainly (one of) the best methods out there.</li>
+<li>When comparing maps, the number of color classes should be chosen endogenously for a fair comparison. This can be done by setting a between-class variance threshold and picking the minimum number of classes required to reach the threshold, separately for each map.</li>
+</ul>
+<h2 id="data">Data</h2>
+<p>I will be using wage data from France, at the <em>département</em> level (similar to a US county). The data is available from the <a href="https://www.insee.fr/fr/statistiques/2012748">Insee website</a> and provides the yearly net wage by gender and occupation category.
+I will also make use of the GIS data for French administrative boundaries available from <a href="https://gadm.org/download_country_v3.html">GADM</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> geopandas <span style="color:#f92672">as</span> gpd
+
+<span style="color:#75715e"># Wage data</span>
+url_wage <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://www.insee.fr/fr/statistiques/fichier/2012748/TCRD_049.xls</span><span style="color:#e6db74">&#39;</span>
+data_wage <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_excel(url_wage, skiprows<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, nrows<span style="color:#f92672">=</span><span style="color:#ae81ff">96</span>)
+cols_wage <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dep_code</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dep_name</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">all</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">men</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">women</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">managers</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">professionals</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">clerks</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">workers</span><span style="color:#e6db74">&#39;</span>]
+data_wage<span style="color:#f92672">.</span>rename(columns<span style="color:#f92672">=</span>dict(zip(data_wage<span style="color:#f92672">.</span>columns, cols_wage)), inplace<span style="color:#f92672">=</span>True)
+
+<span style="color:#75715e"># Geographical data</span>
+url_geo <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">zip+https://biogeo.ucdavis.edu/data/gadm3.6/shp/gadm36_FRA_shp.zip</span><span style="color:#e6db74">&#34;</span>
+data_geo <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(url_geo, layer<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">gadm36_FRA_2</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">2154</span>)
+
+<span style="color:#75715e"># Merged data</span>
+data <span style="color:#f92672">=</span> data_geo<span style="color:#f92672">.</span>merge(data_wage, left_on<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">CC_2</span><span style="color:#e6db74">&#39;</span>, right_on<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dep_code</span><span style="color:#e6db74">&#39;</span>, how<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">inner</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><h2 id="an-example">An example</h2>
+<p>As an example, let's try to build a chloropleth map for the average net wage. The first thing that we might think of could be to break down the wage into equal-length bins. However, this might result in some classes having many counties while others are almost empty. We could solve this issue by computing the quantiles of the wage to get classes with the same number of counties. As it turns out <code>geopandas</code> provides a seamless interface with <code>mapclassify</code>, allowing us to test these two methods easily.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+schemes <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">EqualInterval</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Quantiles</span><span style="color:#e6db74">&#39;</span>]
+fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, len(schemes), figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">15</span>))
+        
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw_map</span>(column, ax, scheme, k<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, <span style="color:#f92672">*</span><span style="color:#f92672">*</span>kwargs):
+    <span style="color:#75715e"># Draw map</span>
+    data<span style="color:#f92672">.</span>plot(column<span style="color:#f92672">=</span>column,
+              edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">black</span><span style="color:#e6db74">&#39;</span>,
+              alpha<span style="color:#f92672">=</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5</span>,
+              cmap<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">OrRd</span><span style="color:#e6db74">&#39;</span>,
+              legend<span style="color:#f92672">=</span>True,
+              ax<span style="color:#f92672">=</span>ax,
+              k<span style="color:#f92672">=</span>k,
+              scheme<span style="color:#f92672">=</span>scheme,
+              <span style="color:#f92672">*</span><span style="color:#f92672">*</span>kwargs
+             )
+    <span style="color:#75715e"># Clean plot</span>
+    leg <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>get_legend()
+    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> leg<span style="color:#f92672">.</span>get_texts():
+        t <span style="color:#f92672">=</span> l<span style="color:#f92672">.</span>get_text()
+        b <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">&#39;</span>)
+        l<span style="color:#f92672">.</span>set_text(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">€{float(x):,.0f}</span><span style="color:#e6db74">&#39;</span> <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> b]))
+    ax<span style="color:#f92672">.</span>tick_params(labelbottom<span style="color:#f92672">=</span>False, labelleft<span style="color:#f92672">=</span>False, bottom<span style="color:#f92672">=</span>False, left<span style="color:#f92672">=</span>False)
+    
+<span style="color:#66d9ef">for</span> (s, a) <span style="color:#f92672">in</span> zip(schemes, ax<span style="color:#f92672">.</span>flatten()):
+    draw_map(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">all</span><span style="color:#e6db74">&#39;</span>, a, s)
+    a<span style="color:#f92672">.</span>set_title(s)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_5_0.png" alt="png"></p>
+<p>As we can see above, these two methods produce maps which carry completely different messages. When using equal-length bins, we get the impression that the country is basically divided in two: the Paris region concentrates high wages, while there is not much variation in the rest of the country. With quantiles, we get a much more nuanced view since we constrain the number of counties of each color to be the same. But most of the information actually moves to the legend: we see that the top class is much more heterogenous than all the others, with a range of about €15k (vs. about €1k for all other classes). Which map should we choose? In my view, they both fail to represent the true nature of the distribution of wages in France. The Paris region does have much higher average wages, which the quantiles map fails to capture. But using equal-length bins fails to represent the fact that other big cities also have higher wages than rural areas. Another issue is that some of the classes in that map are just empty.</p>
+<h2 id="a-clustering-problem">A clustering problem</h2>
+<p>Choosing color classes basically boils down to a clustering problem: we want to group regions that are &ldquo;similar&rdquo; in terms of the variable of interest (i.e. we want to create homogenous classes), and we want to create as many groups as necessary to capture &ldquo;enough&rdquo; of the dissimilarity between regions. The problem is to define what we mean by &ldquo;similar regions&rdquo; and &ldquo;enough groups&rdquo;, but the tools from cluster analysis can help do that.</p>
+<p>A typical definition of a homogenous class is one with the lowest possible variance. With this definition, a possibility would be to build on the <em>k-means</em> algorithm to generate a partition with minimum within-class variance. However <em>k-means</em> is not guaranteed to find the optimal such partition, and the classes it creates are random as they depend on the initial centers, which may not be desirable. An alternative is to use the Fisher-Jenks method, a 1D variant of <em>k-means</em> which obtains the exact minimum variance classification.<a href="#fn1"><sup id="#ln1">1</sup></a></p>
+<p>The Fisher-Jenks method is available out of the box in <code>mapclassify</code>, and we can try it below. We obtain a much more balanced outlook on regional inequalities: the Paris region stands out, but so do the other major cities of Lyon and Toulouse (with the Airbus hub in Toulouse driving up wages in that region).</p>
+<hr>
+<p><a href="#ln1"><sup id="#fn1">1</sup></a> there seem to be several variations of this method (natural breaks, Jenks-Caspall, Max-P, etc.). My understanding is that these algorithms can speed-up computations when many observations are involved, but that Fisher-Jenks&rsquo; exact optimization method will always dominate (also see <a href="https://geographicdata.science/book/notebooks/05_choropleth.html#Choropleth-mapping">this book</a>).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">7.5</span>, <span style="color:#ae81ff">7.5</span>))
+draw_map(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">all</span><span style="color:#e6db74">&#39;</span>, ax, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Fisher_Jenks</span><span style="color:#e6db74">&#39;</span>)
+ax<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Fisher_Jenks</span><span style="color:#e6db74">&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_8_0.png" alt="png"></p>
+<h2 id="choosing-the-number-of-classes">Choosing the number of classes</h2>
+<p>We now have a sensible way to construct a map with a given number of classes. But what if we want the number of classes itself to be endogenous? A case where this may be handy is when we want to compare the maps obtained for several variables (e.g. the geographical dispersion of wages for professionals and office clerks). If one of them is less homogenous across space, maybe we should represent it with a higher number of classes. In our case, it seems that clerks&rsquo; wages exhibit less geographical variability over the country. Would it make more sense to use only four classes instead of five for them?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cols <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">professionals</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">clerks</span><span style="color:#e6db74">&#39;</span>]
+
+fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>,<span style="color:#ae81ff">15</span>))
+<span style="color:#66d9ef">for</span> (c, a) <span style="color:#f92672">in</span> zip(cols, ax):
+    draw_map(c, a, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Fisher_Jenks</span><span style="color:#e6db74">&#39;</span>)
+    a<span style="color:#f92672">.</span>set_title(c<span style="color:#f92672">.</span>capitalize())
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_10_0.png" alt="png"></p>
+<p>There is a literature on how to pick the optimal number of classes in a clustering problem. However, the issue we face here is a little different: we care less about optimality than about interpretability of the number of classes accross different outcomes. An interesting direction in the context of the Fisher-Jenks method is to fix a given threshold for the share of total variance captured between classes and to find the minimum number of classes needed to reach this threshold, for each map separately.</p>
+<p>To get some intuition, we can run the Fisher-Jenks classification for a range of acceptable numbers of classes (2 to 7 in the example below). We can then plot the between-class variance as a function of the number of classes. As it turns out, the between-class variance for clerks is always higher than for professionals which confirms that it might make more sense to use less classes for them. If we want to capture 95% of total variance, only 4 classes are needed for clerks vs. 5 for professionals. With this approach, the maps can also communicate that the wage of clerks is less variable than that of professionals.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> mapclassify <span style="color:#f92672">as</span> mc
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sse</span>(y, yb):
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">Share of variance of y captured bewteen classes yb</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    
+    data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>:y, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">yb</span><span style="color:#e6db74">&#39;</span>:yb})
+    s<span style="color:#f92672">=</span>data<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">yb</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>: [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mean</span><span style="color:#e6db74">&#39;</span>, <span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>var(ddof<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">count</span><span style="color:#e6db74">&#39;</span>]})
+    s<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mean</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">var</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">count</span><span style="color:#e6db74">&#39;</span>]
+    means <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>average(s<span style="color:#f92672">.</span>loc[:,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mean</span><span style="color:#e6db74">&#39;</span>], weights<span style="color:#f92672">=</span>s<span style="color:#f92672">.</span>loc[:,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">count</span><span style="color:#e6db74">&#39;</span>])
+    var_inter <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>average((s<span style="color:#f92672">.</span>loc[:,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mean</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">-</span>means)<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>, weights<span style="color:#f92672">=</span>s<span style="color:#f92672">.</span>loc[:,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">count</span><span style="color:#e6db74">&#39;</span>])
+    var_intra <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>average(s<span style="color:#f92672">.</span>loc[:,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">var</span><span style="color:#e6db74">&#39;</span>], weights<span style="color:#f92672">=</span>s<span style="color:#f92672">.</span>loc[:,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">count</span><span style="color:#e6db74">&#39;</span>])
+    <span style="color:#66d9ef">return</span> (var_inter <span style="color:#f92672">/</span> (var_inter<span style="color:#f92672">+</span>var_intra))
+
+<span style="color:#75715e"># Between-class variance as a function of the number of classes</span>
+ksse <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
+kvals <span style="color:#f92672">=</span> list(range(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">8</span>))
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> cols:
+    ksse[c] <span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>array([sse(data<span style="color:#f92672">.</span>loc[:,c], mc<span style="color:#f92672">.</span>FisherJenks(data<span style="color:#f92672">.</span>loc[:,c], k<span style="color:#f92672">=</span>i)<span style="color:#f92672">.</span>yb) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> kvals])
+    plt<span style="color:#f92672">.</span>plot(kvals, ksse[c])
+plt<span style="color:#f92672">.</span>legend([c<span style="color:#f92672">.</span>capitalize() <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> cols])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Between-class variance</span><span style="color:#e6db74">&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_12_0.png" alt="png"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Number of classes needed to capture 95% of the variance</span>
+nclasses <span style="color:#f92672">=</span> ksse<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: (x<span style="color:#f92672">&gt;</span><span style="color:#f92672">.</span><span style="color:#ae81ff">95</span>)<span style="color:#f92672">.</span>idxmax())
+
+<span style="color:#75715e"># Maps with computed number of classes</span>
+fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>,<span style="color:#ae81ff">15</span>))
+<span style="color:#66d9ef">for</span> (c, a) <span style="color:#f92672">in</span> zip(cols, ax):
+    draw_map(c, a, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Fisher_Jenks</span><span style="color:#e6db74">&#39;</span>, k<span style="color:#f92672">=</span>nclasses[c])
+    a<span style="color:#f92672">.</span>set_title(c<span style="color:#f92672">.</span>capitalize())
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_13_0.png" alt="png"></p>
+<h2 id="other-metrics">Other metrics?</h2>
+<p>We looked at the between-class share of total variance as a metric for choosing a number of classes. This is an attractive metric for two reasons. First, we know from the <a href="https://en.wikipedia.org/wiki/Law_of_total_variance">law of total variance</a> that between-class variance and within-class variance sum nicely to the total variance of the outcome. Second, between-class variance is also the criterion that the Fisher-Jenks method seeks to maximize, so it plays nicely with that method.</p>
+<p>Another popular criterion is the between-class share of total absolute deviation from the median. This can be understood as an $L_1$ equivalent of the between-class share of total variance. This criterion will be less sensitive to extreme values, just like the median is with respect to the mean. It is also nicely built into <code>mapclassify</code> (where it is known as the goodness of absolute deviation fit or GADF). However, since classes are not built using this criterion, it makes less sense to use this as a threshold in my view. Below is an example.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Plot GADF as a function of the number of classes</span>
+gadf <span style="color:#f92672">=</span> {}
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> cols:
+    gadf[c] <span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>array([mc<span style="color:#f92672">.</span>FisherJenks(data<span style="color:#f92672">.</span>loc[:,c], k<span style="color:#f92672">=</span>i)<span style="color:#f92672">.</span>gadf <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> kvals])
+    plt<span style="color:#f92672">.</span>plot(kvals, gadf[c])
+plt<span style="color:#f92672">.</span>legend([c<span style="color:#f92672">.</span>capitalize() <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> cols])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Goodness of absolute deviation fit</span><span style="color:#e6db74">&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_15_0.png" alt="png"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Number of classes from GADF threshold</span>
+fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>,<span style="color:#ae81ff">15</span>))
+<span style="color:#66d9ef">for</span> (c, a) <span style="color:#f92672">in</span> zip(cols, ax):
+    clf <span style="color:#f92672">=</span> mc<span style="color:#f92672">.</span>gadf(data<span style="color:#f92672">.</span>loc[:,c], method<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">FisherJenks</span><span style="color:#e6db74">&#39;</span>, pct<span style="color:#f92672">=</span><span style="color:#f92672">.</span><span style="color:#ae81ff">7</span>)
+    draw_map(c, a, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Fisher_Jenks</span><span style="color:#e6db74">&#39;</span>, k<span style="color:#f92672">=</span>clf[<span style="color:#ae81ff">0</span>])
+    a<span style="color:#f92672">.</span>set_title(c<span style="color:#f92672">.</span>capitalize())
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_16_0.png" alt="png"></p>
+<h2 id="other-clustering-methods">Other clustering methods?</h2>
+<p>Out of <code>mapclassify</code>, I find the Fisher-Jenks method the most convincing. We could however try to go another route by using hierarchical clustering methods from (e.g.) <code>scipy</code>. This gives the opportunity to play around with the linkage function, although it is unclear which metric we should follow to assess what linkage function is right. <a href="https://en.wikipedia.org/wiki/Ward%27s_method">Ward's method</a> seems the most natural since it has a nice interpretation in terms of variance, but then this should just be equivalent to applying the Fisher-Jenks method.</p>
+<p>It turns out that hierarchical clustering with Ward's method actually underperforms the Fisher-Jenks approach, which is able to capture a higher share of the variance with less classes (compare the dotted lines with the solid ones in the graph below). This is due to the greedy nature of hierarchical clustering methods. The resulting map for professionnals&rsquo; wages shows less variation than that obtained with Fisher-Jenks, consistent with the idea that classes are less homogenous.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.cluster <span style="color:#f92672">import</span> hierarchy <span style="color:#66d9ef">as</span> hc
+
+<span style="color:#75715e"># Between-class variance as a function of the number of classes</span>
+ksse_hc <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
+cuts <span style="color:#f92672">=</span> {}
+<span style="color:#66d9ef">for</span> (c, lc) <span style="color:#f92672">in</span> zip(cols, [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#1f77b4</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#ff7f0e</span><span style="color:#e6db74">&#39;</span>]):
+    <span style="color:#75715e"># Build the linkage matrix</span>
+    z <span style="color:#f92672">=</span> hc<span style="color:#f92672">.</span>linkage(data<span style="color:#f92672">.</span>loc[:,[c]], method<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ward</span><span style="color:#e6db74">&#39;</span>)
+    <span style="color:#75715e"># Classes for several cut points</span>
+    cuts[c] <span style="color:#f92672">=</span> hc<span style="color:#f92672">.</span>cut_tree(z, n_clusters<span style="color:#f92672">=</span>kvals)
+    <span style="color:#75715e"># Compute SSE for each k</span>
+    ksse_hc[c] <span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>array([sse(data<span style="color:#f92672">.</span>loc[:,c], cuts[c][:,i]) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(kvals))])
+    <span style="color:#75715e"># Plot</span>
+    plt<span style="color:#f92672">.</span>plot(kvals, ksse_hc[c], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">-</span><span style="color:#e6db74">&#39;</span>, color<span style="color:#f92672">=</span>lc)
+    plt<span style="color:#f92672">.</span>plot(kvals, ksse[c], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--</span><span style="color:#e6db74">&#39;</span>, color<span style="color:#f92672">=</span>lc)
+plt<span style="color:#f92672">.</span>legend(sorted([c<span style="color:#f92672">.</span>capitalize() <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> cols]<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Between-class variance</span><span style="color:#e6db74">&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_18_0.png" alt="png"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Number of classes needed to capture 95% of the variance</span>
+ksse_hc <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(ksse_hc)
+nclasses_hc <span style="color:#f92672">=</span> ksse<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: (x<span style="color:#f92672">&gt;</span><span style="color:#f92672">.</span><span style="color:#ae81ff">95</span>)<span style="color:#f92672">.</span>idxmax())
+
+<span style="color:#75715e"># Maps with computed number of classes</span>
+fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>,<span style="color:#ae81ff">15</span>))
+c <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">professionals</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#75715e"># Hierarchical clustering</span>
+idx <span style="color:#f92672">=</span> nclasses_hc[c]<span style="color:#f92672">-</span>kvals[<span style="color:#ae81ff">0</span>]
+data_classes <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>: data<span style="color:#f92672">.</span>loc[:,c], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">yb</span><span style="color:#e6db74">&#39;</span>: cuts[c][:,idx]})
+bounds <span style="color:#f92672">=</span> data_classes<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">yb</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>agg(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">max</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>values<span style="color:#f92672">.</span>flatten()
+draw_map(c, ax[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UserDefined</span><span style="color:#e6db74">&#39;</span>, classification_kwds<span style="color:#f92672">=</span>{<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">bins</span><span style="color:#e6db74">&#39;</span>: sorted(bounds)})
+ax[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Hierarchical clustering</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#75715e"># Fisher-Jenks</span>
+draw_map(c, ax[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Fisher_Jenks</span><span style="color:#e6db74">&#39;</span>, k<span style="color:#f92672">=</span>nclasses[c])
+ax[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Fisher-Jenks</span><span style="color:#e6db74">&#39;</span>)
+
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/chloropleth_files/chloropleth_19_0.png" alt="png"></p>
+
+      </div>
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "sgskt" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+          </div>
+      </main>
+
+      <footer class="footer">
+  <div class="container">
+    
+     
+        © 2020 Simon Georges-Kot
+    
+    
+       · 
+       Built with <a href="https://gohugo.io/">Hugo</a>
+    
+    
+  </div>
+</footer>
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59770623-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+  </body>
+
+</html>
