@@ -6,7 +6,7 @@
     <description>Recent content on Simon Georges-Kot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2020 20:28:00 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2020 21:53:00 +0100</lastBuildDate>
     
 	<atom:link href="https://sgskt.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -18,6 +18,15 @@
       
       <guid>https://sgskt.github.io/papers/internet-movie-attendance/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Are US small caps overvalued?</title>
+      <link>https://sgskt.github.io/posts/russell2000/</link>
+      <pubDate>Sat, 09 May 2020 21:53:00 +0100</pubDate>
+      
+      <guid>https://sgskt.github.io/posts/russell2000/</guid>
+      <description>This post is about the stock market. I gather financal information on firms in the Russell 2000 index to understand whether popular small cap US stocks are overvalued.</description>
     </item>
     
     <item>
